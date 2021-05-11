@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+/**
+ * These styles should be loaded by the Block Editor only
+*/
+.post-type-sushi-card .block-editor-writing-flow,
+.post-type-sushi-deck .block-editor-writing-flow {
+    max-width: 960px;
+    margin: 24px auto;
+    padding: 24px 0px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 50%);
+}
+
+.c-project-panel {
+	background-color: #fff;
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    overflow: hidden;
+}
+
+.c-project-panel__content {
+	padding: 0px 24px;
+}
+
+.c-project-task {
+	background: #41BAC11C;
+	border-radius: 12px;
+	padding: 20px;
+	margin: 0px 24px;
+}
+
+.c-project-task__checkbox {
+	float: right;
+}
+
+.c-project-task input[type=checkbox] {
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	-o-appearance:none;
+	outline: none;
+	content: none;	
+}
+
+.c-project-task input[type=checkbox]:before {
+	content: "\2714";
+	font-size: 28px;
+	display: block;
+	width: 32px;
+	height: 32px;
+	color: #41BAC133 !important;
+	border: 4px solid #41BAC133;
+	border-radius: 4px;
+	padding-left: 8px;
+	padding-bottom: 9px;
+}
+
+.c-project-task input[type=checkbox]:hover:before {
+	color: #41BAC166 !important;
+	border: 4px solid #41BAC166;
+}
+
+.c-project-task input[type=checkbox]:checked:before {
+	color: #FFFFFF !important;
+	border: 4px solid #41BAC1;
+	background: #41BAC1;
+}

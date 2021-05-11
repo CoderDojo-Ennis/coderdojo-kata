@@ -1,0 +1,29 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-coderdojo-kata {
+	border: 1px dotted #f00;
+}
+
+.c-project-panel__title {
+	display: flex;
+	align-items: center;
+}
+
+.c-project-panel--ingredient .c-project-panel__title {
+	background: #41BAC11C;
+}
+
+.c-project-panel__heading {
+	margin-left: 0;
+}
+
+.c-project-icon--ingredient {
+	color: #41BAC1;
+	font-size: 36px;
+	width: 48px;
+	margin-top: -20px;
+}

@@ -1,0 +1,15 @@
+{
+	"apiVersion": 2,
+	"name": "sushi-cards/hints",
+	"title": "Hints",
+	"category": "widgets",
+	"icon": "editor-help",
+	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "coderdojo-kata",
+	"editorScript": "file:../../build/index.js",
+	"editorStyle": "file:../../build/index.css",
+	"style": "file:../../build/style-index.css"
+}

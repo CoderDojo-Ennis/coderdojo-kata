@@ -1,0 +1,249 @@
+.c-project-panel {
+	background-color: #fff;
+	border-radius: 12px;
+	border: 2px solid #ccc;
+	overflow: hidden;
+	margin-bottom: 28px;
+}
+
+.c-project-panel__heading {
+    background-position: left 10px center;
+    background-repeat: no-repeat;
+    margin: 0 !important;
+    overflow: hidden;
+    padding: 16px 40px 16px 16px;
+    position: relative;
+    transition: background-color 150ms ease-in-out; 
+}
+
+.c-project-panel__heading:after {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    content: " ";
+    display: block;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 16px;
+    top: 0;
+    -webkit-transition: opacity .15s ease-in-out;
+    transition: opacity .15s ease-in-out;
+    width: 24px;
+}
+
+
+.c-project-panel__heading:hover {
+    cursor: pointer;
+}
+
+.c-project-panel__heading:hover:after {
+    background-image: url(https://projects.raspberrypi.org/static/media/chevron-down.e9ea6ea6.svg);
+    background-size: 20px;
+    opacity: 1;
+}
+
+.c-project-panel__heading--has-close-icon:after {
+    background-image: url(https://projects.raspberrypi.org/static/media/cross.05b65a04.svg);
+    background-size: 15px;
+    opacity: .4;
+}
+
+.c-project-panel__heading--has-close-icon:hover:after {
+    background-image: url(https://projects.raspberrypi.org/static/media/cross.05b65a04.svg);
+    background-size: 15px;
+    opacity: 1;
+}
+
+.c-project-panel--hints .c-project-panel__heading, .c-project-panel--ingredient .c-project-panel__heading, .c-project-panel--save .c-project-panel__heading {
+    background-position: left 15px center;
+    padding-left: 55px;
+}
+
+.c-project-panel__content {
+    font-size: 16px;
+    padding: 24px;
+}
+
+.u-hidden {
+  display: none;
+}
+
+/* Code */
+.c-project-panel--code .c-project-panel__heading--has-copy-icon {
+    background-position: left 10px center;
+    background-repeat: no-repeat;
+    margin: 0 !important;
+    overflow: hidden;
+    padding: 16px 40px 16px 16px;
+    position: relative;
+    transition: background-color 150ms ease-in-out; 
+	background: #6425801C;
+}
+
+.c-project-panel--code pre {
+    padding:24px;
+}
+
+/* Hints */
+
+.c-project-panel--hints .c-project-panel__heading--has-close-icon {
+	background: #ED684A1C;
+}
+
+.c-project-panel--hints .c-project-panel__heading {
+  background-image: url(https://projects.raspberrypi.org/static/media/hints-panel-icon.407ab140.svg);
+  background-position: left 10px center;
+  background-repeat: no-repeat;
+}
+
+.c-project-panel__swiper {
+    position: relative;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.c-project-panel__swiper-pagination {
+  
+    left: 50%;
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.c-project-panel__swiper-bullet--active:before, .c-project-panel__swiper-bullet:hover:before {
+    background-color: #999;
+}
+
+.c-project-panel__swiper-bullet:before {
+    background-color: #ddd;
+    border-radius: 100%;
+    content: " ";
+    display: block;
+    height: 12px;
+    width: 12px;
+}
+
+.c-project-panel__swiper-bullet {
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 20px;
+    padding: 6px;
+    width: 20px;
+}
+
+.c-project-panel__swiper-bullet--active:before, .c-project-panel__swiper-bullet:hover:before {
+    background-color: #999;
+}
+
+.c-project-panel__swiper-button {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 10px 17px;
+    cursor: pointer;
+    display: block;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 40px;
+}
+
+.c-project-panel__swiper-button--next {
+    background-image: url(https://projects.raspberrypi.org/static/media/button-next.9c3a200e.svg);
+    right: -24px;
+}
+
+.c-project-panel__swiper-button--prev {
+    background-image: url(https://projects.raspberrypi.org/static/media/button-prev.4fd3786a.svg);
+    left: -24px;
+}
+
+.c-project-panel__swiper-button--disabled {
+    display: none;
+}
+
+.c-project-panel__swiper-wrapper {
+  display:absolute;
+  width: 1000px;
+    overflow-y: hidden;
+}
+.c-project-panel__swiper-slide {
+    float: left;
+  margin-right: 96px;
+}
+
+
+
+
+/* Ingredients */
+
+.c-project-panel--ingredient .c-project-panel__heading--has-close-icon {
+	background: #41BAC11C;
+}
+
+.c-project-panel--ingredient .c-project-panel__heading {
+  background-image: url(https://projects.raspberrypi.org/static/media/ingredient-panel-icon.eefdd675.svg);
+  background-position: left 10px center;
+  background-repeat: no-repeat;
+}
+
+/* Task */
+
+.c-project-task {
+	background: #41BAC11C;
+	border-radius: 12px;
+	padding: 20px;
+    margin-bottom: 28px;
+}
+
+.c-project-task__checkbox {
+	float: right;
+}
+
+.c-project-task input[type=checkbox] {
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	-o-appearance:none;
+	outline: none;
+	content: none;	
+}
+
+.c-project-task input[type=checkbox]:before {
+	content: "\2714";
+	font-size: 28px;
+	display: block;
+	width: 32px;
+	height: 32px;
+	color: #41BAC133 !important;
+	border: 4px solid #41BAC133;
+	border-radius: 4px;
+	padding-left: 8px;
+	padding-bottom: 9px;
+}
+
+.c-project-task input[type=checkbox]:hover:before {
+	color: #41BAC166 !important;
+	border: 4px solid #41BAC166;
+}
+
+.c-project-task input[type=checkbox]:checked:before {
+	color: #FFFFFF !important;
+	border: 4px solid #41BAC1;
+	background: #41BAC1;
+}
+
+.wp-block-sushi-cards-hint .block-editor-inner-blocks .block-editor-block-list__layout {
+    border: 1px dotted #f00;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+
+
+.wp-block-sushi-cards-hint {
+    width: 100%;
+}
+
+

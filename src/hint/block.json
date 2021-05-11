@@ -1,0 +1,16 @@
+{
+	"apiVersion": 2,
+	"name": "sushi-cards/hint",
+	"title": "Hint",
+	"category": "text",
+	"parent": [
+		"sushi-cards/hints"
+	],
+	"supports": {
+		"html": false
+	},
+	"textdomain": "coderdojo-kata",
+	"editorScript": "file:../../build/index.js",
+	"editorStyle": "file:../../build/index.css",
+	"style": "file:../../build/style-index.css"
+}

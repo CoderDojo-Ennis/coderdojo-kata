@@ -1,0 +1,25 @@
+{
+	"apiVersion": 2,
+	"name": "sushi-cards/code-snippet",
+	"title": "Code Snippet",
+	"category": "widgets",
+	"icon": "editor-code",
+	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"attributes": {
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": "code"
+		},
+		"language": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "coderdojo-kata",
+	"editorScript": "file:../../build/index.js",
+	"editorStyle": "file:../../build/index.css",
+	"style": "file:../../build/style-index.css"
+}
