@@ -2,39 +2,39 @@
 
 // Add meta boxes to top level parent only
 function coderdojo_kata_register_metaboxes( $post_type, $post ) {
-    
-	if (!$post_type == 'sushi-deck') {
+
+	if (!$post_type == 'sushi_deck') {
 		return;
 	}
 
 	//add_meta_box('theme_box_ID', __('Theme'), 'your_styling_function', 'sushi-deck', 'side', 'core');
-	add_meta_box( 
+	add_meta_box(
 		'sushi-deck-metabox',
 		'Sushi Deck Details',
 		'sushi_deck_metabox_callback',
-		'sushi-deck',
+		'sushi_deck',
 		'side',
 		'high'
 	);
- 
-	add_meta_box( 
+
+	add_meta_box(
 	 'sushi-cards-metabox',
 	 'Sushi Cards',
 	 'sushi_cards_metabox_callback',
-	 'sushi-deck',
+	 'sushi_deck',
 	 'advanced',
 	 'high'
 	 );
-	
+
 }
 add_action( 'add_meta_boxes', 'coderdojo_kata_register_metaboxes', 10, 2 );
 
 
 function sushi_deck_metabox_callback(){
-	
+
 	global $post;
 	$groups;$group;
-	
+
 	$areas = coderdojo_kata_get_area_terms();
 	$area = coderdojo_kata_get_area_meta($post->ID);
 
@@ -42,7 +42,7 @@ function sushi_deck_metabox_callback(){
 		$groups = coderdojo_kata_get_group_terms($area->term_id);
 		$group = coderdojo_kata_get_group_meta($post->ID);
 	}
-	
+
 	$types = coderdojo_kata_get_type_terms();
 	$type = coderdojo_kata_get_type_meta($post->ID);
 
@@ -57,9 +57,9 @@ function sushi_deck_metabox_callback(){
 	} else {
 		$trinket_url = $trinket[0];
 	}
- 
+
 	?>
-	<div class="components-panel__row"> 
+	<div class="components-panel__row">
 		<div class="editor-post-format__content">
 			<label for="post-format-selector-0">Area</label>
 			<select name="form_area" id="form_area" onChange="groupdropdownupdate()">
@@ -85,7 +85,7 @@ function sushi_deck_metabox_callback(){
 					} else {
 						echo '<option value="' . $term->slug . '">' . $term->name . '</option>';
 					}
-				}?> 
+				}?>
 			</select>
 		</div>
 	</div>
@@ -126,7 +126,7 @@ function sushi_deck_metabox_callback(){
 				<input class="components-text-control__input" type="number" name="form_duration" id="form_duration" size="6" value="<?php echo $duration[0] ?>">
 			</div>
 		</div>
-	</div> 
+	</div>
 	<div class="components-panel__row">
 		<div class="components-base-control editor-page-attributes__order css-wdf2ti-Wrapper e1puf3u0">
 			<div class="components-base-control__field css-11vcxb9-StyledField e1puf3u1">
@@ -135,10 +135,10 @@ function sushi_deck_metabox_callback(){
 			</div>
 		</div>
 	</div>
- 
+
 	<?php
  }
- 
+
 function save_sushi_deck_custom_metabox( $post_id ) {
 
 	global $post;
@@ -152,31 +152,31 @@ function save_sushi_deck_custom_metabox( $post_id ) {
 	}
 
 	if ( array_key_exists( 'form_type', $_POST ) ) {
-		$tag = array( $_POST['form_type'] ); 
+		$tag = array( $_POST['form_type'] );
 		wp_set_object_terms( $post_id, $_POST['form_type'], 'types' );
 	}
 
-	if ( array_key_exists( 'form_level', $_POST ) ) { 
+	if ( array_key_exists( 'form_level', $_POST ) ) {
 		wp_set_object_terms( $post_id, $_POST['form_level'], 'levels' );
 	}
 
-	if ( array_key_exists( 'form_duration', $_POST ) ) { 
+	if ( array_key_exists( 'form_duration', $_POST ) ) {
 		update_post_meta($post_id, 'sushi_deck_duration', $_POST['form_duration']);
 	}
 
-	if ( array_key_exists( 'form_trinket', $_POST ) ) { 
+	if ( array_key_exists( 'form_trinket', $_POST ) ) {
 		update_post_meta($post_id, 'sushi_deck_trinket', $_POST['form_trinket']);
 	}
 
 }
 add_action( 'save_post', 'save_sushi_deck_custom_metabox' );
- 
+
  function sushi_cards_metabox_callback() {
- 
+
 	 global $post;
- 
-	 
-	 
+
+
+
 	 if ( $post->post_status == 'auto-draft' ) {
 		 return;
 	 }
@@ -186,36 +186,36 @@ add_action( 'save_post', 'save_sushi_deck_custom_metabox' );
 	 echo '<p>The name of your new Sushi Card.</p>';
 	 echo '<a class="button action" onclick="apfaddpost(' .  $post->ID . ');" style="cursor: pointer">Add new Sushi Card</a>';
 	 echo '</div>';
- 
+
 	 $sushi_Card_Table = new Sushi_Card_List_Table($post->ID);
-	 $sushi_Card_Table->prepare_items(); 
-	 $sushi_Card_Table->display(); 	
+	 $sushi_Card_Table->prepare_items();
+	 $sushi_Card_Table->display();
  }
- 
+
  function _ajax_fetch_custom_list_callback() {
- 
+
 	 $post_ID = $_POST['post_ID'];
 	 $post_Name = $_POST['post_name'];
 	 $id = $_GET['post'];
 
-	 
-	 
+
+
 	 $post_id = wp_insert_post( array(
 		 'post_title'        => $post_Name,
 		 'post_status'       => 'draft',
 		 'post_parent'       => $post_ID,
-		 'post_type'         => 'sushi-card'
+		 'post_type'         => 'sushi_card'
 	 ) );
- 
+
 	 $sushi_Card_Table = new Sushi_Card_List_Table($post_ID);
 	 $sushi_Card_Table->ajax_response();
  }
  add_action( 'wp_ajax_nopriv__ajax_fetch_custom_list', '_ajax_fetch_custom_list_callback' );
  add_action('wp_ajax__ajax_fetch_custom_list', '_ajax_fetch_custom_list_callback');
- 
- 
+
+
  function _ajax_fetch_group_list_callback() {
- 
+
 	$group_slug = $_POST['term_slug'];
 	$group = get_term_by( 'slug', $group_slug, 'groups');
 	$group_terms = coderdojo_kata_get_group_terms($group->term_id);
@@ -239,13 +239,13 @@ add_action( 'save_post', 'save_sushi_deck_custom_metabox' );
 
 	echo json_encode($response);
 	wp_die();
-	
-	
+
+
 }
 add_action( 'wp_ajax_nopriv__ajax_fetch_group_list', '_ajax_fetch_group_list_callback' );
 add_action('wp_ajax__ajax_fetch_group_list', '_ajax_fetch_group_list_callback');
- 
- 
- 
- 
+
+
+
+
 

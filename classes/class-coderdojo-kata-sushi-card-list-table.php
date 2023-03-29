@@ -20,10 +20,10 @@ if ( ! class_exists( 'Sushi_Card_List_Table' ) ) {
 
 		var $items = array();
         var $ID = 0;
-        
+
 
         /**
-	 * REQUIRED. Set up a constructor that references the parent constructor. We 
+	 * REQUIRED. Set up a constructor that references the parent constructor. We
 	 * use the parent reference to set some default configs.
 	 */
         function __construct($parent_post_ID) {
@@ -41,7 +41,7 @@ if ( ! class_exists( 'Sushi_Card_List_Table' ) ) {
                     'ID'        => $parent_post_ID,
                 )
             );
-            
+
         }
 
         function get_columns(){
@@ -60,16 +60,16 @@ if ( ! class_exists( 'Sushi_Card_List_Table' ) ) {
             $sushi_card_objects = get_posts( array(
                 'title_li'    => '',
                 'post_parent'    => $this->ID,
-                'post_type'   => 'sushi-card',
+                'post_type'   => 'sushi_card',
                 'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
                 'orderby' => 'menu_order',
                 'order' => 'ASC',
                 'posts_per_page' => -1,
                 'echo' => false,
             ) );
-            
+
             foreach($sushi_card_objects as $sushi_card_object)
-            {   
+            {
                 $card = array('ID' => $sushi_card_object->ID,'post_title' => $sushi_card_object->post_title, 'post_parent' => $sushi_card_object->post_parent, 'order' => $sushi_card_object->menu_order, 'post_status' => $sushi_card_object->post_status);
                 array_push($sushi_cards ,$card);
             }
@@ -81,9 +81,9 @@ if ( ! class_exists( 'Sushi_Card_List_Table' ) ) {
             $sortable = array();
             $this->_column_headers = array($columns, $hidden, $sortable);
         }
-        
+
         function column_default( $item, $column_name ) {
-            switch( $column_name ) { 
+            switch( $column_name ) {
                 case 'post_title':
                     return column_post_title($item);
                 case 'post_parent':
@@ -94,13 +94,13 @@ if ( ! class_exists( 'Sushi_Card_List_Table' ) ) {
                 return; //print_r( $item, true ) ; //Show the whole array for troubleshooting purposes
             }
         }
-        
+
         function column_post_title($item) {
             $actions = array(
                     'edit'      => sprintf('<a href="?post=%s&action=%s">Edit</a>',$item['ID'],'edit'),
                     'delete'    => sprintf('<a href="?post=%s&action=%s">Delete</a>',$item['ID'],'delete'),
                 );
-        
+
             return sprintf('%1$s %2$s', $item['post_title'], $this->row_actions($actions) );
         }
 
@@ -127,10 +127,10 @@ if ( ! class_exists( 'Sushi_Card_List_Table' ) ) {
          */
         function display_tablenav($which) {
 
-            
+
         }
 
-        
+
 
         /**
          * Handle an incoming ajax request (called from admin-ajax.php)
@@ -141,44 +141,44 @@ if ( ! class_exists( 'Sushi_Card_List_Table' ) ) {
         function ajax_response() {
 
             //check_ajax_referer( 'ajax-custom-list-nonce', '_ajax_custom_list_nonce' );
-    
+
             $this->prepare_items();
-    
+
             extract( $this->_args );
             extract( $this->_pagination_args, EXTR_SKIP );
-    
+
             ob_start();
             if ( ! empty( $_REQUEST['no_placeholder'] ) )
                 $this->display_rows();
             else
                 $this->display_rows_or_placeholder();
             $rows = ob_get_clean();
-    
+
             ob_start();
             $this->print_column_headers();
             $headers = ob_get_clean();
-    
+
             ob_start();
             $this->pagination('top');
             $pagination_top = ob_get_clean();
-    
+
             ob_start();
             $this->pagination('bottom');
             $pagination_bottom = ob_get_clean();
-    
+
             $response = array( 'rows' => $rows );
             $response['pagination']['top'] = $pagination_top;
             $response['pagination']['bottom'] = $pagination_bottom;
             $response['column_headers'] = $headers;
-    
+
             if ( isset( $total_items ) )
                 $response['total_items_i18n'] = sprintf( _n( '1 item', '%s items', $total_items ), number_format_i18n( $total_items ) );
-    
+
             if ( isset( $total_pages ) ) {
                 $response['total_pages'] = $total_pages;
                 $response['total_pages_i18n'] = number_format_i18n( $total_pages );
             }
-    
+
             die( json_encode( $response ) );
         }
 	}
