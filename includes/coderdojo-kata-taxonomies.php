@@ -54,13 +54,13 @@ function coderdojo_kata_register_custom_taxonomies() {
 		"rewrite" => [ 'slug' => 'kata', 'with_front' => false,  'hierarchical' => true, ],
 		"show_admin_column" => true,
 		"show_in_rest" => false,
-		"rest_base" => "groups",
+		"rest_base" => "sushi_group",
 		"rest_controller_class" => "WP_REST_Terms_Controller",
 		"show_in_quick_edit" => true,
 		"sort" => true,
 		"show_in_graphql" => false,
 	];
-	register_taxonomy( "groups", [ "sushi_shoe","sushi_deck" ], $args );
+	register_taxonomy( "sushi_group", [ "sushi_shoe","sushi_deck" ], $args );
 
 	/**
 	 * Taxonomy: Types.
@@ -101,16 +101,16 @@ function coderdojo_kata_register_custom_taxonomies() {
 		"show_in_menu" => true,
 		"show_in_nav_menus" => true,
 		"query_var" => true,
-		"rewrite" => [ 'slug' => 'types', 'with_front' => true, ],
+		"rewrite" => [ 'slug' => 'kata/%sushi_group%', 'with_front' => true, ],
 		"show_admin_column" => true,
 		"show_in_rest" => false,
-		"rest_base" => "types",
+		"rest_base" => "sushi_type",
 		"rest_controller_class" => "WP_REST_Terms_Controller",
 		"show_in_quick_edit" => true,
 		"sort" => true,
 		"show_in_graphql" => false,
 	];
-	register_taxonomy( "types", [ "sushi_deck" ], $args );
+	register_taxonomy( "sushi_type", [ "sushi_deck" ], $args );
 
 	/**
 	 * Taxonomy: Levels.
@@ -151,16 +151,16 @@ function coderdojo_kata_register_custom_taxonomies() {
 		"show_in_menu" => true,
 		"show_in_nav_menus" => true,
 		"query_var" => true,
-		"rewrite" => [ 'slug' => 'levels', 'with_front' => true, ],
+		"rewrite" => [ 'slug' => 'sushi_level', 'with_front' => true, ],
 		"show_admin_column" => true,
 		"show_in_rest" => false,
-		"rest_base" => "levels",
+		"rest_base" => "sushi_level",
 		"rest_controller_class" => "WP_REST_Terms_Controller",
 		"show_in_quick_edit" => true,
 		"sort" => true,
 		"show_in_graphql" => false,
 	];
-	register_taxonomy( "levels", [ "sushi_deck" ], $args );
+	register_taxonomy( "sushi_level", [ "sushi_deck" ], $args );
 }
 
 add_action( 'init', 'coderdojo_kata_register_custom_taxonomies' );

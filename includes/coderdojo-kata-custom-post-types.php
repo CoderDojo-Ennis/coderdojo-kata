@@ -12,6 +12,77 @@
 function coderdojo_kata_register_custom_post_types() {
 
 	/**
+	 * Post Type: Bento Boxes.
+	 */
+
+	$labels = [
+		"name" => esc_html__( "Bento Boxes", "coderdojo-kata" ),
+		"singular_name" => esc_html__( "Bento Box", "coderdojo-kata" ),
+		"menu_name" => esc_html__( "My Bento Boxes", "coderdojo-kata" ),
+		"all_items" => esc_html__( "All Bento Boxes", "coderdojo-kata" ),
+		"add_new" => esc_html__( "Add new", "coderdojo-kata" ),
+		"add_new_item" => esc_html__( "Add new Bento Box", "coderdojo-kata" ),
+		"edit_item" => esc_html__( "Edit Bento Box", "coderdojo-kata" ),
+		"new_item" => esc_html__( "New Bento Box", "coderdojo-kata" ),
+		"view_item" => esc_html__( "View Bento Box", "coderdojo-kata" ),
+		"view_items" => esc_html__( "View Bento Boxes", "coderdojo-kata" ),
+		"search_items" => esc_html__( "Search Bento Boxes", "coderdojo-kata" ),
+		"not_found" => esc_html__( "No Bento Boxes found", "coderdojo-kata" ),
+		"not_found_in_trash" => esc_html__( "No Bento Boxes found in trash", "coderdojo-kata" ),
+		"parent" => esc_html__( "Parent Bento Box:", "coderdojo-kata" ),
+		"featured_image" => esc_html__( "Featured image for this Bento Box", "coderdojo-kata" ),
+		"set_featured_image" => esc_html__( "Set featured image for this Bento Box", "coderdojo-kata" ),
+		"remove_featured_image" => esc_html__( "Remove featured image for this Bento Box", "coderdojo-kata" ),
+		"use_featured_image" => esc_html__( "Use as featured image for this Bento Box", "coderdojo-kata" ),
+		"archives" => esc_html__( "Bento Box archives", "coderdojo-kata" ),
+		"insert_into_item" => esc_html__( "Insert into Bento Box", "coderdojo-kata" ),
+		"uploaded_to_this_item" => esc_html__( "Upload to this Bento Box", "coderdojo-kata" ),
+		"filter_items_list" => esc_html__( "Filter Bento Boxes list", "coderdojo-kata" ),
+		"items_list_navigation" => esc_html__( "Bento Boxes list navigation", "coderdojo-kata" ),
+		"items_list" => esc_html__( "Bento Boxes list", "coderdojo-kata" ),
+		"attributes" => esc_html__( "Bento Boxes attributes", "coderdojo-kata" ),
+		"name_admin_bar" => esc_html__( "Bento Box", "coderdojo-kata" ),
+		"item_published" => esc_html__( "Bento Box published", "coderdojo-kata" ),
+		"item_published_privately" => esc_html__( "Bento Box published privately.", "coderdojo-kata" ),
+		"item_reverted_to_draft" => esc_html__( "Bento Box reverted to draft.", "coderdojo-kata" ),
+		"item_scheduled" => esc_html__( "Bento Box scheduled", "coderdojo-kata" ),
+		"item_updated" => esc_html__( "Bento Box updated.", "coderdojo-kata" ),
+		"parent_item_colon" => esc_html__( "Parent Bento Box:", "coderdojo-kata" ),
+	];
+
+	$args = [
+		"label" => esc_html__( "Bento Boxes", "coderdojo-kata" ),
+		"labels" => $labels,
+		"description" => "Bento Boxes are a series of 6 projects that help to build your coding and design skills.",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => true,
+		"show_in_menu" => false,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => true,
+		"rewrite" => [
+			"slug" => "kata/". esc_html__( "bento-boxes", "coderdojo-kata" ),
+			"with_front" => true
+		],
+		"query_var" => true,
+		"menu_icon" => "dashicons-welcome-learn-more",
+		"supports" => [ "title", "editor", "thumbnail", "excerpt" ],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type( "bento_box", $args );
+
+	/**
 	 * Post Type: Learning Paths.
 	 */
 
@@ -53,7 +124,7 @@ function coderdojo_kata_register_custom_post_types() {
 	$args = [
 		"label" => esc_html__( "Learning Paths", "coderdojo-kata" ),
 		"labels" => $labels,
-		"description" => "",
+		"description" => "Paths are a series of 6 projects that help to build your coding and design skills. Paths will help you gain new skills, then make design choices to personalise your projects, and finally create something unique.",
 		"public" => true,
 		"publicly_queryable" => true,
 		"show_ui" => true,
@@ -61,7 +132,7 @@ function coderdojo_kata_register_custom_post_types() {
 		"rest_base" => "",
 		"rest_controller_class" => "WP_REST_Posts_Controller",
 		"rest_namespace" => "wp/v2",
-		"has_archive" => "pathways",
+		"has_archive" => 'kata/pathways',
 		"show_in_menu" => false,
 		"show_in_nav_menus" => true,
 		"delete_with_user" => false,
@@ -70,11 +141,14 @@ function coderdojo_kata_register_custom_post_types() {
 		"map_meta_cap" => true,
 		"hierarchical" => false,
 		"can_export" => true,
-		"rewrite" => [ "slug" => "pathways", "with_front" => true ],
+		"rewrite" => [
+			"slug" => "kata/". esc_html__( "pathways", "coderdojo-kata" ),
+			"with_front" => true
+		],
 		"query_var" => true,
 		"menu_icon" => "dashicons-welcome-learn-more",
 		"supports" => [ "title", "editor", "thumbnail", "excerpt" ],
-		"taxonomies" => [ "groups" ],
+		"taxonomies" => [ "sushi_group" ],
 		"show_in_graphql" => false,
 	];
 
@@ -129,25 +203,23 @@ function coderdojo_kata_register_custom_post_types() {
 		"show_in_rest" => true,
 		"rest_base" => "",
 		"rest_controller_class" => "WP_REST_Posts_Controller",
-		"has_archive" => '/kata/projects/',
+		"has_archive" => 'kata/projects',
 		"show_in_menu" => true,
 		"show_in_nav_menus" => false,
 		"delete_with_user" => false,
 		"exclude_from_search" => false,
 		'capability_type' => 'post',
         'map_meta_cap'    => true,
-		"hierarchical" => true,
+		"hierarchical" => false,
 		"rewrite" => [
-            "slug" => "kata/projects",
-            "with_front" => false,
-            "feeds" => true,
-            "pages" => true,
+            "slug" => "kata/". esc_html__( "projects", "coderdojo-kata" ),
+            "with_front" => false
         ],
 		"query_var" => true,
 		"menu_position" => 21,
 		"menu_icon" => "dashicons-media-code",
 		"supports" => [ "title", "editor", "thumbnail", "excerpt", "author", ],
-		"taxonomies" => [ "topic", "hardware", "software", "level", "groups", "types", "levels" ],
+		"taxonomies" => [ "sushi_group", "sushi_type", "sushi_level" ],
 		"show_in_graphql" => false,
 	];
 
@@ -203,14 +275,17 @@ function coderdojo_kata_register_custom_post_types() {
 		"rest_base" => "",
 		"rest_controller_class" => "WP_REST_Posts_Controller",
 		"has_archive" => false,
-		"show_in_menu" => 'edit.php?post_type=sushi-deck',
+		"show_in_menu" => 'edit.php?post_type=sushi_deck',
 		"show_in_nav_menus" => false,
 		"delete_with_user" => false,
 		"exclude_from_search" => false,
 		'capability_type' => 'post',
         'map_meta_cap'    => true,
 		"hierarchical" => false,
-		"rewrite" => false,
+		"rewrite" => array(
+			"slug" => "kata/" . esc_html__( "projects", "coderdojo-kata" ) . "/%sushi_deck%",
+			"with_front" => true
+		),
 		"query_var" => true,
 		"menu_position" => 76,
 		"menu_icon" => "dashicons-admin-generic",

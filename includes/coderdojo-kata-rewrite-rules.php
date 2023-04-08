@@ -9,52 +9,29 @@
  * @since 1.0.0
  */
 
-function coderdojo_kata_add_rewrite_rules() {
-	add_rewrite_tag('%sushi-card%', '([^/]+)', 'sushi-card=');
-	add_permastruct('sushi-card', '/kata/%area%/%sushi-card%', false);
-	add_rewrite_rule('^kata/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/?','index.php?sushi-card=$matches[5]','top');
-	add_rewrite_rule('^editor/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/?','index.php?sushi-card=$matches[5]','top');
-    add_rewrite_rule('^kata/([^/]+)/([^/]+)/([^/]+)/([^/]+)/?','index.php?post_type=sushi-deck&types=$matches[3]&name=$matches[4]','top');
-	add_rewrite_rule('^editor/([^/]+)/([^/]+)/([^/]+)/([^/]+)/?','index.php?post_type=sushi-deck&types=$matches[3]&name=$matches[4]','top');
-	add_rewrite_rule('^teams/([^/]+)/([^/]+)/([^/]+)/([^/]+)/?','index.php?post_type=sushi-deck&types=$matches[3]&name=$matches[4]','top');
-	add_rewrite_rule('^kata/([^/]+)/([^/]+)/([^/]+)/?','index.php?groups=$matches[1]&groups=$matches[2]&types=$matches[3]','top');
-}
-add_action( 'init', 'coderdojo_kata_add_rewrite_rules' );
+add_action( 'init', function() {
 
-function my_permalinks($permalink, $post, $leavename) {
+	add_rewrite_rule( '^kata/projects/(.*)/([^/]+)/?$','index.php?sushi_card=$matches[2]','top' );
+	add_rewrite_rule( '^kata/(.+?)/(.+?)/([^/]+)/?$', 'index.php?sushi_group=$matches[1]&sushi_group=$matches[2]&sushi_type=$matches[3]', 'top');
 
-	if($post->post_type != 'sushi-card' || empty($permalink) || in_array($post->post_status, array('draft', 'pending', 'auto-draft')))
-	 	return $permalink;
+});
 
-	//$parent = $post->post_parent;
-	//$parent_post = get_post( 7 );
+add_filter( 'post_type_link', function( $link, $post ) {
+	if ( 'sushi_card' == get_post_type( $post ) ) {
+		//Lets go to get the parent cartoon-series name
+		if( $post->post_parent ) {
+			$parent = get_post( $post->post_parent );
+			if( !empty($parent->post_name) ) {
+				return str_replace( '%sushi_deck%', $parent->post_name, $link );
+			}
+		} else {
+			//This seems to not work. It is intented to build pretty permalinks
+			//when episodes has not parent, but it seems that it would need
+			//additional rewrite rules
+			//return str_replace( '/%series_name%', '', $link );
+		}
 
-	$parent_url = get_permalink( $post->post_parent );
-        $permalink = $parent_url . $post->post_name . '/';
-
-	return $permalink;
-}
-add_filter('post_type_link', 'my_permalinks', 10, 3);
-
-function coderdojo_kata_filter_post_link( $permalink, $post ) {
-	
-	if ($post->post_type != 'sushi-deck' || empty($permalink) || in_array($post->post_status, array('draft', 'pending', 'auto-draft'))) {
-		return $permalink;
 	}
-	
-	$area_term = coderdojo_kata_get_area_meta($post->ID);
-	$group_term = coderdojo_kata_get_group_meta($post->ID);
-	$type_term = coderdojo_kata_get_type_meta($post->ID);
-
-	$area = urlencode( $area_term->slug );
-	$group = urlencode( $group_term->slug );
-    $type = urlencode( $type_term->slug );
-
-    $placeholders = array('%area%', '%group%', "%type%");
-    $taxonomies   = array($area, $group, $type);
-    $permalink = str_replace($placeholders, $taxonomies , $permalink ); 
-
-    return $permalink;
-}
-add_filter('post_type_link', 'coderdojo_kata_filter_post_link', 10, 2 );
+	return $link;
+}, 10, 2 );
 

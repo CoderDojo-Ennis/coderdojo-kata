@@ -32,16 +32,17 @@ require_once dirname( __FILE__ ) . '/includes/coderdojo-kata-meta-boxes.php';
 require_once dirname( __FILE__ ) . '/includes/coderdojo-kata-rewrite-rules.php';
 
 /** Custom Rewrite Tags */
-//require_once dirname( __FILE__ ) . '/includes/coderdojo-kata-rewrite-tags.php';
+require_once dirname( __FILE__ ) . '/includes/coderdojo-kata-rewrite-tags.php';
 
 /** Custom Taxonomies */
 require_once dirname( __FILE__ ) . '/includes/coderdojo-kata-taxonomies.php';
 
-/** Custom Terms */
-require_once dirname( __FILE__ ) . '/includes/coderdojo-kata-terms.php';
 
 /** Custom Terms */
 //require_once dirname( __FILE__ ) . '/includes/coderdojo-kata-list-sushi-cards.php';
+
+/** Custom Project List Table */
+require_once dirname( __FILE__ ) . '/classes/class-coderdojo-kata-sushi_deck-list-table.php';
 
 /** Custom List Table */
 require_once dirname( __FILE__ ) . '/classes/class-coderdojo-kata-sushi-card-list-table.php';
@@ -67,7 +68,7 @@ function coderdojo_kata_block_init() {
 add_action( 'init', 'coderdojo_kata_block_init' );
 
 function coderdojo_kata_setup() {
-	
+
 	// Add support for editor styles.
 	add_theme_support( 'editor-styles' );
 
@@ -78,7 +79,7 @@ function coderdojo_kata_setup() {
 }
 add_action( 'after_setup_theme', 'coderdojo_kata_setup' );
 
-function coderdojo_kata_enqueue_script() {   
+function coderdojo_kata_enqueue_script() {
     wp_enqueue_script( 'sushi-cards_script', plugin_dir_url( __FILE__ ) . 'assets/js/index.js' );
 }
 add_action('wp_enqueue_scripts', 'coderdojo_kata_enqueue_script');
@@ -97,3 +98,19 @@ define('APFPATH', WP_PLUGIN_DIR."/".dirname( plugin_basename( __FILE__ ) ) );
 
 
 
+function coderdojo_kata_activate() {
+	// Trigger our function that registers the custom post type plugin.
+	wp_insert_post(
+		array(
+			'menu_order'   => 2,
+			'post_excerpt' => 'Welcome to Kata, the CoderDojo community resource sharing platform! We provide a selection of resources that you can use in running or setting up your Dojo.',
+			'post_name'    => 'kata',
+			'post_status'  => 'publish',
+			'post_title'   => 'Kata',
+			'post_type'    => 'page',
+		)
+	);
+	// Clear the permalinks after the post type has been registered.
+	flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, 'coderdojo_kata_activate' );

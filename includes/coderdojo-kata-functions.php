@@ -1,22 +1,22 @@
-<?php 
+<?php
 
 
 function coderdojo_kata_get_area_terms() {
-    
-    return get_terms( 
+
+    return get_terms(
         array(
-            'taxonomy' => 'groups',
+            'taxonomy' => 'sushi_group',
             'orderby' => 'term_id',
             'order' => 'ASC',
             'parent' => 0,
             'hide_empty' => false
-        ) 
+        )
     );
 }
 
 function coderdojo_kata_get_area_meta($post_ID) {
-    
-    $area_terms =  wp_get_object_terms( $post_ID, 'groups', array('orderby' => 'term_id'));
+
+    $area_terms =  wp_get_object_terms( $post_ID, 'sushi_group', array('orderby' => 'term_id'));
 
 	$area = NULL;
     if($area_terms) {
@@ -26,9 +26,9 @@ function coderdojo_kata_get_area_meta($post_ID) {
 }
 
 function coderdojo_kata_get_group_terms($area_ID, $number_of_terms = '') {
-    
+
     return  get_terms( array(
-        'taxonomy' => 'groups',
+        'taxonomy' => 'sushi_group',
         'order' => 'ASC',
         'orderby' => 'term_id',
         'parent' => $area_ID,
@@ -38,8 +38,8 @@ function coderdojo_kata_get_group_terms($area_ID, $number_of_terms = '') {
 }
 
 function coderdojo_kata_get_group_meta($post_ID) {
-    
-    $group_terms =  wp_get_object_terms( $post_ID, 'groups', array('orderby' => 'term_id'));
+
+    $group_terms =  wp_get_object_terms( $post_ID, 'sushi_group', array('orderby' => 'term_id'));
 
 	$group = array(
 		 'name' => ''
@@ -51,20 +51,20 @@ function coderdojo_kata_get_group_meta($post_ID) {
 }
 
 function coderdojo_kata_get_type_terms() {
-    
-    return get_terms( 
+
+    return get_terms(
         array(
-            'taxonomy' => 'types',
+            'taxonomy' => 'sushi_type',
             'orderby' => 'term_id',
             'order' => 'ASC',
             'hide_empty' => false
-        ) 
+        )
     );
 }
 
 function coderdojo_kata_get_type_meta($post_ID) {
-    
-    $type_terms =  wp_get_object_terms( $post_ID, 'types' );
+
+    $type_terms =  wp_get_object_terms( $post_ID, 'sushi_type' );
 
     $type = array(
         'name' => ''
@@ -77,21 +77,21 @@ function coderdojo_kata_get_type_meta($post_ID) {
 }
 
 function coderdojo_kata_get_level_terms() {
-    
-    return get_terms( 
+
+    return get_terms(
         array(
-            'taxonomy' => 'levels',
+            'taxonomy' => 'sushi_level',
             'orderby' => 'term_id',
             'order' => 'ASC',
             'hide_empty' => false
-        ) 
+        )
     );
 }
 
 function coderdojo_kata_get_level_meta($post_ID) {
-    
-    $level_terms =  wp_get_object_terms( $post_ID, 'levels' );
-    
+
+    $level_terms =  wp_get_object_terms( $post_ID, 'sushi_level' );
+
     $level = array(
         'name' => ''
     );

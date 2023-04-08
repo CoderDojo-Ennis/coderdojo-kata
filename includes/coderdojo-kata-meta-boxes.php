@@ -3,6 +3,17 @@
 // Add meta boxes to top level parent only
 function coderdojo_kata_register_metaboxes( $post_type, $post ) {
 
+	if ($post_type == 'sushi_shoe') {
+		add_meta_box(
+			'sushi-decks-metabox',
+			'Sushi Decks',
+			'sushi_decks_metabox_callback',
+			'sushi_shoe',
+			'advanced',
+			'high'
+		);
+	}
+
 	if (!$post_type == 'sushi_deck') {
 		return;
 	}
@@ -28,6 +39,27 @@ function coderdojo_kata_register_metaboxes( $post_type, $post ) {
 
 }
 add_action( 'add_meta_boxes', 'coderdojo_kata_register_metaboxes', 10, 2 );
+
+function sushi_decks_metabox_callback() {
+
+	global $post;
+
+
+
+	if ( $post->post_status == 'auto-draft' ) {
+		return;
+	}
+	echo '<div class="form-field form-required sushi-card-name-wrap">';
+	echo '<label for="sushi-card-name">Name</label>';
+	echo '<input name="sushi-card-name" id="sushi-card-name" type="text" value="" size="40" aria-required="true" spellcheck="false" data-ms-editor="true">';
+	echo '<p>The name of your new Sushi Card.</p>';
+	echo '<a class="button action" onclick="apfaddpost(' .  $post->ID . ');" style="cursor: pointer">Add new Sushi Card</a>';
+	echo '</div>';
+
+	$sushi_Card_Table = new Sushi_Deck_List_Table($post->ID);
+	$sushi_Card_Table->prepare_items();
+	$sushi_Card_Table->display();
+}
 
 
 function sushi_deck_metabox_callback(){
@@ -148,16 +180,16 @@ function save_sushi_deck_custom_metabox( $post_id ) {
 			$_POST['form_area'],
 			$_POST['form_group']
 		);
-		wp_set_object_terms( $post_id, $tags, 'groups' );
+		wp_set_object_terms( $post_id, $tags, 'sushi_groups' );
 	}
 
 	if ( array_key_exists( 'form_type', $_POST ) ) {
 		$tag = array( $_POST['form_type'] );
-		wp_set_object_terms( $post_id, $_POST['form_type'], 'types' );
+		wp_set_object_terms( $post_id, $_POST['form_type'], 'sushi_types' );
 	}
 
 	if ( array_key_exists( 'form_level', $_POST ) ) {
-		wp_set_object_terms( $post_id, $_POST['form_level'], 'levels' );
+		wp_set_object_terms( $post_id, $_POST['form_level'], 'sushi_levels' );
 	}
 
 	if ( array_key_exists( 'form_duration', $_POST ) ) {
@@ -217,7 +249,7 @@ add_action( 'save_post', 'save_sushi_deck_custom_metabox' );
  function _ajax_fetch_group_list_callback() {
 
 	$group_slug = $_POST['term_slug'];
-	$group = get_term_by( 'slug', $group_slug, 'groups');
+	$group = get_term_by( 'slug', $group_slug, 'sushi_groups');
 	$group_terms = coderdojo_kata_get_group_terms($group->term_id);
 	/* $group_terms = get_terms( array(
         'taxonomy' => 'groups',
